@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">LottieBottomNavSample</string>
+    <string name="animate_message_icon">Animate Message Icon</string>
+</resources>
