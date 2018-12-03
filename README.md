@@ -1,5 +1,20 @@
+[![](https://jitpack.io/v/wwdablu/lottiebottomnav.svg)](https://jitpack.io/#wwdablu/lottiebottomnav)  
+
 # LottieBottomNav  
 Library which allows to create a bottom navigation view allowing the usage of Lottie views.  
+
+## Gradle  
+```
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}  
+
+dependencies {
+    implementation 'com.github.wwdablu:lottiebottomnav:1.0.0'
+}
+```
 
 ## Declare in XML  
 ```
