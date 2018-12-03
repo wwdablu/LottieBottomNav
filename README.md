@@ -1,5 +1,20 @@
+[![](https://jitpack.io/v/wwdablu/lottiebottomnav.svg)](https://jitpack.io/#wwdablu/lottiebottomnav)  
+
 # LottieBottomNav  
-Library which allows to create a bottom navigation view allowing the usage of Lottie views.  
+Library which allows to create a bottom navigation view allowing the usage of Lottie views.    
+
+## Gradle  
+```
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}  
+
+dependencies {
+    implementation 'com.github.wwdablu:lottiebottomnav:x.y.z'
+}
+```
 
 ## Declare in XML  
 ```
@@ -67,4 +82,7 @@ It should be noted that if `autoPlay` is enabled, then it must be noted that `on
 ## Demo  
 The demo video is present inside the demo folder. The GIF version is shown below.  
   
-![Demo](https://github.com/wwdablu/LottieBottomNav/blob/master/demo/demo_1.0.0.gif)
+![Demo](https://github.com/wwdablu/LottieBottomNav/blob/master/demo/demo_1.0.0.gif)  
+
+**Lottie Files**  
+The lottie files used have been taken from `https://www.lottiefiles.com/`. The lotties files have been developed by the respective developers and I have not created them.  
