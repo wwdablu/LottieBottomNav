@@ -1,6 +1,23 @@
 # LottieBottomNav  
 Library which allows to create a bottom navigation view allowing the usage of Lottie views.  
 
+## Declare in XML  
+```
+<com.wwdablu.soumya.lottiebottomnav.LottieBottomNav
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/bottom_nav"
+    android:layout_alignParentBottom="true"
+    android:background="@android:color/white"
+    app:menu_selected_height="48dp"
+    app:menu_selected_width="48dp"
+    app:menu_unselected_height="40dp"
+    app:menu_unselected_width="40dp"
+    app:menu_text_show_on_unselected="true"
+    />
+```  
+This would create the LottieBottomNav control. Using it the width and height of the menu items in selected and unselected state of the menu item can be controlled. Also as to whether the text for the menu item will be used for the unselected items can also be controlled using the property `menu_text_show_on_unselected`.  
+
 ## Creating Menu Items  
 The LottieBottomNav contains an array of menu items. The process to create a menu item is:  
 ```
@@ -47,9 +64,7 @@ void onAnimationCancel(int index, MenuItem menuItem);
 ```  
 It should be noted that if `autoPlay` is enabled, then it must be noted that `onMenuSelected` will call `onAnimationStart` immediately. So it is better to perform quick tasks in these callback and move heavy tasks in separate threads.  
   
-
-  
-**Demo**:  
+## Demo  
 The demo video is present inside the demo folder. The GIF version is shown below.  
   
 ![Demo](https://github.com/wwdablu/LottieBottomNav/blob/master/demo/demo_1.0.0.gif)
