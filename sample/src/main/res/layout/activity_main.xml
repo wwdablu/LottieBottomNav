@@ -20,7 +20,11 @@
         android:id="@+id/bottom_nav"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
-        app:lbn_itemCount="4"
+        app:menu_selected_height="48dp"
+        app:menu_selected_width="48dp"
+        app:menu_unselected_height="40dp"
+        app:menu_unselected_width="40dp"
+        app:menu_text_show_on_unselected="true"
         />
 
 </RelativeLayout>

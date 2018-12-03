@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         });
 
         MenuItem item1 = MenuItemBuilder.create("Dashboard", "home.json", MenuItem.Source.Assets, null)
-                .selectedTextColor(Color.BLUE)
-                .unSelectedTextColor(Color.RED)
+                .selectedTextColor(Color.BLACK)
+                .unSelectedTextColor(Color.GRAY)
                 .pausedProgress(100)
                 .autoPlay(false)
                 .loop(false)

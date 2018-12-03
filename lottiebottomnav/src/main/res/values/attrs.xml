@@ -2,7 +2,11 @@
 <resources>
 
     <declare-styleable name="LottieBottomNav">
-        <attr name="lbn_itemCount" format="integer" />
+        <attr name="menu_selected_width" format="dimension" />
+        <attr name="menu_selected_height" format="dimension" />
+        <attr name="menu_unselected_width" format="dimension" />
+        <attr name="menu_unselected_height" format="dimension" />
+        <attr name="menu_text_show_on_unselected" format="boolean" />
     </declare-styleable>
 
 </resources>

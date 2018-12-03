@@ -1,6 +1,7 @@
 package com.wwdablu.soumya.lottiebottomnav;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -14,7 +15,8 @@ final class LottieViewCreator {
     @NonNull
     static LottieMenuItemBinding from(@NonNull ViewGroup parent,
                                       @NonNull MenuItem menuItem,
-                                      boolean  isSelected) {
+                                      boolean  isSelected,
+                                      @NonNull Config config) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
@@ -24,6 +26,15 @@ final class LottieViewCreator {
         binder.lmiMenuText.setTextColor(isSelected ? menuItem.menuTextSelectedColor : menuItem.menuTextUnselectedColor);
 
         setLottieView(binder.lmiMenuItem, menuItem, isSelected);
+
+        ViewGroup.LayoutParams params = binder.lmiMenuItem.getLayoutParams();
+        params.width = isSelected ? config.getSelectedMenuWidth() : config.getUnselectedMenuWidth();
+        params.height = isSelected ? config.getSelectedMenuHeight() : config.getUnselectedMenuHeight();
+        binder.lmiMenuItem.setLayoutParams(params);
+
+        if(!config.isShowTextOnUnselected()) {
+            binder.lmiMenuText.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
+        }
 
         return binder;
     }

@@ -2,7 +2,9 @@ package com.wwdablu.soumya.lottiebottomnav;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -21,14 +23,17 @@ public class LottieBottomNav extends LinearLayout {
     private List<MenuItem> menuItemList;
     private ArrayList<LottieMenuItemBinding> lottieViews;
     private ILottieBottomNavCallback callback;
+    private Config config;
 
     private int selectedIndex;
 
     public LottieBottomNav(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setOrientation(HORIZONTAL);
+        setGravity(Gravity.CENTER);
         selectedIndex = 0;
         callback = new LottieBottomNavCallbackImpl();
+        extractProperties(attrs);
     }
 
     /**
@@ -49,9 +54,10 @@ public class LottieBottomNav extends LinearLayout {
             return;
         }
 
+        lottieViews.get(index).lmiMenuItem.pauseAnimation();
         menuItemList.set(index, menuItem);
 
-        LottieMenuItemBinding binder = LottieViewCreator.from(this, menuItem, selectedIndex == index);
+        LottieMenuItemBinding binder = LottieViewCreator.from(this, menuItem, selectedIndex == index, config);
         lottieViews.set(index, binder);
 
         removeViewAt(index);
@@ -61,6 +67,9 @@ public class LottieBottomNav extends LinearLayout {
         binder.getRoot().setTag(index);
         binder.getRoot().setOnClickListener(view -> switchSelectedMenu((int) view.getTag()));
         binder.lmiMenuItem.addAnimatorListener(animatorListener);
+        if(!config.isShowTextOnUnselected()) {
+            binder.lmiMenuText.setVisibility(isSelected(index) ? View.VISIBLE : View.INVISIBLE);
+        }
         addView(binder.getRoot(), index);
         binder.lmiMenuItem.setProgress(0F);
         binder.lmiMenuItem.playAnimation();
@@ -119,13 +128,18 @@ public class LottieBottomNav extends LinearLayout {
         super.setOrientation(HORIZONTAL);
     }
 
+    @Override
+    public void setGravity(int gravity) {
+        super.setGravity(Gravity.CENTER);
+    }
+
     private void prepareMenuItems() {
 
         int index = 0;
         lottieViews.clear();
 
         for(MenuItem menuItem : menuItemList) {
-            LottieMenuItemBinding binder = LottieViewCreator.from(this, menuItem, selectedIndex == index);
+            LottieMenuItemBinding binder = LottieViewCreator.from(this, menuItem, selectedIndex == index, config);
             binder.getRoot().setTag(index);
             binder.getRoot().setOnClickListener(view -> switchSelectedMenu((int) view.getTag()));
             binder.lmiMenuItem.addAnimatorListener(animatorListener);
@@ -158,6 +172,9 @@ public class LottieBottomNav extends LinearLayout {
             return;
         }
 
+        //Pause any existing, or else it might impact
+        lottieViews.get(selectedIndex).lmiMenuItem.pauseAnimation();
+
         LottieMenuItemBinding binding = lottieViews.get(newIndex);
         MenuItem menuItem = menuItemList.get(newIndex);
 
@@ -165,6 +182,13 @@ public class LottieBottomNav extends LinearLayout {
         binding.lmiMenuText.setTextColor(menuItem.menuTextSelectedColor);
 
         binding.lmiMenuItem.playAnimation();
+
+        ViewGroup.LayoutParams params = binding.lmiMenuItem.getLayoutParams();
+        params.width = config.getSelectedMenuWidth();
+        params.height = config.getSelectedMenuHeight();
+        binding.lmiMenuItem.setLayoutParams(params);
+
+        binding.lmiMenuText.setVisibility(View.VISIBLE);
 
         callback.onMenuSelected(selectedIndex, newIndex, menuItem);
 
@@ -178,6 +202,15 @@ public class LottieBottomNav extends LinearLayout {
 
         binding.lmiMenuItem.pauseAnimation();
         binding.lmiMenuItem.setProgress(menuItem.lottieProgress);
+
+        params = binding.lmiMenuItem.getLayoutParams();
+        params.width = config.getUnselectedMenuWidth();
+        params.height = config.getUnselectedMenuHeight();
+        binding.lmiMenuItem.setLayoutParams(params);
+
+        if(!config.isShowTextOnUnselected()) {
+            binding.lmiMenuText.setVisibility(View.GONE);
+        }
 
         selectedIndex = newIndex;
     }
@@ -199,6 +232,26 @@ public class LottieBottomNav extends LinearLayout {
         }
 
         invalidate();
+    }
+
+    private void extractProperties(@Nullable AttributeSet attributeSet) {
+
+        config = new Config(getContext());
+        if(attributeSet == null) {
+            return;
+        }
+
+        TypedArray properties = getContext().obtainStyledAttributes(attributeSet, R.styleable.LottieBottomNav);
+        config.setSelectedMenuWidth(properties.getDimensionPixelSize(R.styleable.LottieBottomNav_menu_selected_width, -1));
+        config.setSelectedMenuHeight(properties.getDimensionPixelSize(R.styleable.LottieBottomNav_menu_selected_height, -1));
+        config.setUnselectedMenuWidth(properties.getDimensionPixelSize(R.styleable.LottieBottomNav_menu_unselected_width, -1));
+        config.setUnselectedMenuHeight(properties.getDimensionPixelSize(R.styleable.LottieBottomNav_menu_unselected_height, -1));
+        config.setShowTextOnUnselected(properties.getBoolean(R.styleable.LottieBottomNav_menu_text_show_on_unselected, true));
+        properties.recycle();
+    }
+
+    private boolean isSelected(int index) {
+        return selectedIndex == index;
     }
 
     Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
