@@ -50,7 +50,20 @@ public class LottieBottomNav extends LinearLayout {
         }
 
         menuItemList.set(index, menuItem);
-        prepareMenuItems();
+
+        LottieMenuItemBinding binder = LottieViewCreator.from(this, menuItem, selectedIndex == index);
+        lottieViews.set(index, binder);
+
+        removeViewAt(index);
+        ViewGroup.LayoutParams params = binder.menuContainer.getLayoutParams();
+        params.width = (getWidth() / menuItemList.size());
+        binder.menuContainer.setLayoutParams(params);
+        binder.getRoot().setTag(index);
+        binder.getRoot().setOnClickListener(view -> switchSelectedMenu((int) view.getTag()));
+        binder.lmiMenuItem.addAnimatorListener(animatorListener);
+        addView(binder.getRoot(), index);
+        binder.lmiMenuItem.setProgress(0F);
+        binder.lmiMenuItem.playAnimation();
     }
 
     /**
@@ -115,27 +128,7 @@ public class LottieBottomNav extends LinearLayout {
             LottieMenuItemBinding binder = LottieViewCreator.from(this, menuItem, selectedIndex == index);
             binder.getRoot().setTag(index);
             binder.getRoot().setOnClickListener(view -> switchSelectedMenu((int) view.getTag()));
-            binder.lmiMenuItem.addAnimatorListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-                    callback.onAnimationStart(selectedIndex, menuItemList.get(selectedIndex));
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    callback.onAnimationEnd(selectedIndex, menuItemList.get(selectedIndex));
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-                    callback.onAnimationCancel(selectedIndex, menuItemList.get(selectedIndex));
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-                    //
-                }
-            });
+            binder.lmiMenuItem.addAnimatorListener(animatorListener);
 
             if(index == selectedIndex) {
                 binder.lmiMenuItem.setProgress(0F);
@@ -207,4 +200,27 @@ public class LottieBottomNav extends LinearLayout {
 
         invalidate();
     }
+
+    Animator.AnimatorListener animatorListener = new Animator.AnimatorListener() {
+
+        @Override
+        public void onAnimationStart(Animator animator) {
+            callback.onAnimationStart(selectedIndex, menuItemList.get(selectedIndex));
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animator) {
+            callback.onAnimationEnd(selectedIndex, menuItemList.get(selectedIndex));
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animator) {
+            callback.onAnimationCancel(selectedIndex, menuItemList.get(selectedIndex));
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animator) {
+            //
+        }
+    };
 }

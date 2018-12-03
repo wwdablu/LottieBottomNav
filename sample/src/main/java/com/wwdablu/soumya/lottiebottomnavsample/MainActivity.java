@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
             }
         });
 
-        MenuItem item1 = MenuItemBuilder.create("Menu 1", "home.json", MenuItem.Source.Assets, null)
+        MenuItem item1 = MenuItemBuilder.create("Dashboard", "home.json", MenuItem.Source.Assets, null)
                 .selectedTextColor(Color.BLUE)
                 .unSelectedTextColor(Color.RED)
                 .pausedProgress(100)
@@ -49,19 +49,19 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
                 .build();
 
         MenuItem item2 = MenuItemBuilder.createFrom(item1)
-                .menuTitle("Menu 2")
+                .menuTitle("Gifts")
                 .selectedLottieName("gift.json")
                 .unSelectedLottieName("gift.json")
                 .build();
 
         MenuItem item3 = MenuItemBuilder.createFrom(item1)
-                .menuTitle("Menu 3")
+                .menuTitle("Mail")
                 .selectedLottieName("message.json")
                 .unSelectedLottieName("message.json")
                 .build();
 
         MenuItem item4 = MenuItemBuilder.createFrom(item1)
-                .menuTitle("Menu 4")
+                .menuTitle("Settings")
                 .selectedLottieName("settings.json")
                 .unSelectedLottieName("settings.json")
                 .build();
