@@ -1,5 +1,6 @@
 package com.wwdablu.soumya.lottiebottomnav;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,13 @@ final class LottieViewCreator {
 
         LottieMenuItemBinding binder = DataBindingUtil.inflate(inflater, R.layout.lottie_menu_item, parent, false);
 
-        binder.lmiMenuText.setText(menuItem.menuTitle);
-        binder.lmiMenuText.setTextColor(isSelected ? menuItem.menuTextSelectedColor : menuItem.menuTextUnselectedColor);
+        binder.lmiMenuText.setTypeface(menuItem.fontItem.getTypeface());
+
+        binder.lmiMenuText.setText(menuItem.fontItem.getSpannableTitle());
+        binder.lmiMenuText.setTextSize(TypedValue.COMPLEX_UNIT_SP, isSelected ? menuItem.fontItem.getSelectedTextSize()
+                : menuItem.fontItem.getUnselectedTextSize());
+        binder.lmiMenuText.setTextColor(isSelected ? menuItem.fontItem.getTextSelectedColor() :
+                menuItem.fontItem.getTextUnselectedColor());
 
         setLottieView(binder.lmiMenuItem, menuItem, isSelected);
 

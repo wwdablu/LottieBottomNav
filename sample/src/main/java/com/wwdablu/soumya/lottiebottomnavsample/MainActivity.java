@@ -1,11 +1,15 @@
 package com.wwdablu.soumya.lottiebottomnavsample;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.TypefaceCompat;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.wwdablu.soumya.lottiebottomnav.FontBuilder;
+import com.wwdablu.soumya.lottiebottomnav.FontItem;
 import com.wwdablu.soumya.lottiebottomnav.ILottieBottomNavCallback;
 import com.wwdablu.soumya.lottiebottomnav.LottieBottomNav;
 import com.wwdablu.soumya.lottiebottomnav.MenuItem;
@@ -40,28 +44,34 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
             }
         });
 
-        MenuItem item1 = MenuItemBuilder.create("Dashboard", "home.json", MenuItem.Source.Assets, null)
+        FontItem fontItem = FontBuilder.create("Dashboard1")
                 .selectedTextColor(Color.BLACK)
                 .unSelectedTextColor(Color.GRAY)
+                .selectedTextSize(12) //SP
+                .unSelectedTextSize(8) //SP
+                .setTypeface(Typeface.createFromAsset(getAssets(), "scriptin.ttf"))
+                .build();
+
+        MenuItem item1 = MenuItemBuilder.create("home.json", MenuItem.Source.Assets, fontItem, "dash")
                 .pausedProgress(100)
                 .autoPlay(false)
                 .loop(false)
                 .build();
 
-        MenuItem item2 = MenuItemBuilder.createFrom(item1)
-                .menuTitle("Gifts")
+        fontItem = FontBuilder.create(fontItem).setTitle("Gifts1").build();
+        MenuItem item2 = MenuItemBuilder.createFrom(item1, fontItem)
                 .selectedLottieName("gift.json")
                 .unSelectedLottieName("gift.json")
                 .build();
 
-        MenuItem item3 = MenuItemBuilder.createFrom(item1)
-                .menuTitle("Mail")
+        fontItem = FontBuilder.create(fontItem).setTitle("Mail1").build();
+        MenuItem item3 = MenuItemBuilder.createFrom(item1, fontItem)
                 .selectedLottieName("message.json")
                 .unSelectedLottieName("message.json")
                 .build();
 
-        MenuItem item4 = MenuItemBuilder.createFrom(item1)
-                .menuTitle("Settings")
+        fontItem = FontBuilder.create(fontItem).setTitle("Settings1").setTypeface(null).build();
+        MenuItem item4 = MenuItemBuilder.createFrom(item1, fontItem)
                 .selectedLottieName("settings.json")
                 .unSelectedLottieName("settings.json")
                 .build();

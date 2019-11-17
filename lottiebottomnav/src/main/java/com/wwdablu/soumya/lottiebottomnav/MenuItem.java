@@ -1,7 +1,5 @@
 package com.wwdablu.soumya.lottiebottomnav;
 
-import androidx.annotation.ColorInt;
-
 public class MenuItem {
 
     public enum Source {
@@ -9,9 +7,7 @@ public class MenuItem {
         Raw
     }
 
-    String menuTitle;
-    @ColorInt int menuTextSelectedColor;
-    @ColorInt int menuTextUnselectedColor;
+    FontItem fontItem;
 
     String selectedLottieName;
     String unselectedLottieName;
