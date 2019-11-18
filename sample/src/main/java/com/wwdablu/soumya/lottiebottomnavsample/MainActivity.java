@@ -6,6 +6,9 @@ import androidx.core.graphics.TypefaceCompat;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.widget.Button;
 
 import com.wwdablu.soumya.lottiebottomnav.FontBuilder;
@@ -57,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
                 .loop(false)
                 .build();
 
-        fontItem = FontBuilder.create(fontItem).setTitle("Gifts").build();
+        SpannableString spannableString = new SpannableString("Gifts");
+        spannableString.setSpan(new ForegroundColorSpan(Color.RED), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        fontItem = FontBuilder.create(fontItem).setTitle(spannableString).build();
         MenuItem item2 = MenuItemBuilder.createFrom(item1, fontItem)
                 .selectedLottieName("gift.json")
                 .unSelectedLottieName("gift.json")
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         MenuItem item3 = MenuItemBuilder.createFrom(item1, fontItem)
                 .selectedLottieName("message.json")
                 .unSelectedLottieName("message.json")
+                .pausedProgress(0.75f)
                 .build();
 
         fontItem = FontBuilder.create(fontItem).setTitle("Settings").build();
