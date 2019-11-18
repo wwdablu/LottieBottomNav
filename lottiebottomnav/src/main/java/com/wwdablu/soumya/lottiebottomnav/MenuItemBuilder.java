@@ -1,29 +1,25 @@
 package com.wwdablu.soumya.lottiebottomnav;
 
-import android.graphics.Color;
 import android.text.TextUtils;
 
-import com.wwdablu.soumya.lottiebottomnav.MenuItem.Source;
-
-import androidx.annotation.ColorInt;
+import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.wwdablu.soumya.lottiebottomnav.MenuItem.Source;
 
 public final class MenuItemBuilder {
 
     private MenuItem menuItem;
 
-    private MenuItemBuilder(String menuTitle,
-                            String lottieName,
+    private MenuItemBuilder(String lottieName,
                             Source lottieSource,
+                            FontItem fontItem,
                             Object tag) {
 
         menuItem = new MenuItem();
 
-        menuItem.menuTitle = menuTitle;
-
-        menuItem.menuTextSelectedColor = Color.BLACK;
-        menuItem.menuTextUnselectedColor = Color.GRAY;
+        menuItem.fontItem = fontItem;
 
         menuItem.selectedLottieName = lottieName;
         menuItem.unselectedLottieName = lottieName;
@@ -33,54 +29,38 @@ public final class MenuItemBuilder {
         menuItem.tag = tag;
     }
 
-    public static MenuItemBuilder create(@NonNull  String menuTitle,
-                                         @NonNull  String lottieName,
+    public static MenuItemBuilder create(@NonNull  String lottieName,
                                          @NonNull  Source lottieSource,
+                                         @NonNull  FontItem fontItem,
                                          @Nullable Object tag) throws IllegalArgumentException {
 
-        if(TextUtils.isEmpty(menuTitle)) {
-            throw new IllegalArgumentException("Menu name cannot be empty.");
-        } else if (TextUtils.isEmpty(lottieName)) {
+        if (TextUtils.isEmpty(lottieName)) {
             throw new IllegalArgumentException("Lottie file must be provided.");
         }
 
-        return new MenuItemBuilder(menuTitle, lottieName, lottieSource, tag);
+        return new MenuItemBuilder(lottieName, lottieSource, fontItem, tag);
     }
 
     public static MenuItemBuilder createFrom(@NonNull MenuItem menuItem) {
+        return createFrom(menuItem, FontBuilder.create(menuItem.fontItem).build());
+    }
 
-        MenuItemBuilder builder = create(menuItem.menuTitle,
+    public static MenuItemBuilder createFrom(@NonNull MenuItem menuItem, @NonNull FontItem fontItem) {
+
+        MenuItemBuilder builder = create(
                 menuItem.selectedLottieName,
                 menuItem.lottieSource,
+                fontItem,
                 null);
 
         builder.menuItem.selectedLottieName = menuItem.selectedLottieName;
         builder.menuItem.unselectedLottieName = menuItem.unselectedLottieName;
 
-        builder.menuItem.menuTextSelectedColor = menuItem.menuTextSelectedColor;
-        builder.menuItem.menuTextUnselectedColor = menuItem.menuTextUnselectedColor;
-
         builder.menuItem.lottieProgress = menuItem.lottieProgress;
 
-        builder.menuItem.autoPlay = menuItem.autoPlay;
         builder.menuItem.loop = menuItem.loop;
 
         return builder;
-    }
-
-    public MenuItemBuilder menuTitle(@NonNull String menuTitle) {
-        this.menuItem.menuTitle = menuTitle;
-        return this;
-    }
-
-    public MenuItemBuilder selectedTextColor(@ColorInt int color) {
-        menuItem.menuTextSelectedColor = color;
-        return this;
-    }
-
-    public MenuItemBuilder unSelectedTextColor(@ColorInt int color) {
-        menuItem.menuTextUnselectedColor = color;
-        return this;
     }
 
     public MenuItemBuilder selectedLottieName(String lottieName) {
@@ -93,17 +73,12 @@ public final class MenuItemBuilder {
         return this;
     }
 
-    public MenuItemBuilder pausedProgress(float progress) {
+    public MenuItemBuilder pausedProgress(@FloatRange(from = 0, to = 1) float progress) {
 
         if (progress <= 0) progress = 0;
-        else if (progress >= 100) progress = 100;
+        else if (progress >= 1) progress = 1;
 
         menuItem.lottieProgress = progress;
-        return this;
-    }
-
-    public MenuItemBuilder autoPlay(boolean autoPlay) {
-        menuItem.autoPlay = autoPlay;
         return this;
     }
 

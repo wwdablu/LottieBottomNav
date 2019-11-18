@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -179,7 +180,8 @@ public class LottieBottomNav extends LinearLayout {
         MenuItem menuItem = menuItemList.get(newIndex);
 
         binding.lmiMenuItem.setAnimation(menuItem.selectedLottieName);
-        binding.lmiMenuText.setTextColor(menuItem.menuTextSelectedColor);
+        binding.lmiMenuText.setTextColor(menuItem.fontItem.getTextSelectedColor());
+        binding.lmiMenuText.setTextSize(TypedValue.COMPLEX_UNIT_SP, menuItem.fontItem.getSelectedTextSize());
 
         binding.lmiMenuItem.playAnimation();
 
@@ -198,7 +200,8 @@ public class LottieBottomNav extends LinearLayout {
         menuItem = menuItemList.get(selectedIndex);
 
         binding.lmiMenuItem.setAnimation(menuItem.unselectedLottieName);
-        binding.lmiMenuText.setTextColor(menuItem.menuTextUnselectedColor);
+        binding.lmiMenuText.setTextColor(menuItem.fontItem.getTextUnselectedColor());
+        binding.lmiMenuText.setTextSize(TypedValue.COMPLEX_UNIT_SP, menuItem.fontItem.getUnselectedTextSize());
 
         binding.lmiMenuItem.pauseAnimation();
         binding.lmiMenuItem.setProgress(menuItem.lottieProgress);

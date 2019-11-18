@@ -36,24 +36,32 @@ This would create the LottieBottomNav control. Using it the width and height of 
 ## Creating Menu Items  
 The LottieBottomNav contains an array of menu items. The process to create a menu item is:  
 ```
-MenuItem homeItem = MenuItemBuilder.create("Dashboard", "home.json", MenuItem.Source.Assets, "dashboard")
-    .selectedTextColor(Color.BLUE)
-    .unSelectedTextColor(Color.RED)
-    .pausedProgress(100)
-    .autoPlay(false)
+MenuItem homeItem = MenuItemBuilder.create("home.json", MenuItem.Source.Assets, fontItem, "dashboard")
+    .pausedProgress(1f)
     .loop(false)
     .build();
 ```  
-This allows us to create a menu with both the selected and unselected states. The other way to create is from an existing mmenu item object and then modifying any existing property. `Note: Only tag property is not copied`.  
+This allows us to create a menu with both the selected and unselected states. The other way to create is from an existing menu item object and then modifying any existing property. `Note: Only tag property is not copied`.  
 ```
 MenuItem settings = MenuItemBuilder.createFrom(homeItem)
-    .menuTitle("Settings")
     .selectedLottieName("settings.json")
     .unSelectedLottieName("settings.json")
     .tag("settings")
     .build();
 ```  
-In the above approach properties like `textColor`, `autoPlay` and `loop` are of the same value from which it is created.  
+In the above approach properties like `autoPlay` and `loop` are of the same value from which it is created.  
+
+## Creating Text Menu Items  
+These are used to display the text on the menu item.  
+```
+FontItem fontItem = FontBuilder.create("Dashboard")
+    .selectedTextColor(Color.BLACK)
+    .unSelectedTextColor(Color.GRAY)
+    .selectedTextSize(16) //SP
+    .unSelectedTextSize(12) //SP
+    .setTypeface(Typeface.createFromAsset(getAssets(), "coffeesugar.ttf"))
+    .build();
+```
   
   
 ## Update a particular menu item  
@@ -86,3 +94,6 @@ The demo video is present inside the demo folder. The GIF version is shown below
 
 **Lottie Files**  
 The lottie files used have been taken from `https://www.lottiefiles.com/`. The lotties files have been developed by the respective developers and I have not created them.  
+
+**Font**  
+The font has been downloaded from https://www.1001fonts.com/coffee-with-sugar-font.html. I have used them for the purpose of demo.
