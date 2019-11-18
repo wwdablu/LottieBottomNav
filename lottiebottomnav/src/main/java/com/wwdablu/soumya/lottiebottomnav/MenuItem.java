@@ -15,7 +15,6 @@ public class MenuItem {
     Source lottieSource;
     float  lottieProgress;
 
-    boolean autoPlay;
     boolean loop;
 
     Object tag;

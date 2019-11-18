@@ -54,6 +54,7 @@ final class LottieViewCreator {
                 view.setAnimation(isSelected ? menuItem.selectedLottieName : menuItem.unselectedLottieName);
                 view.pauseAnimation();
                 view.setProgress(menuItem.lottieProgress);
+                view.setRepeatCount(menuItem.loop ? Integer.MAX_VALUE : 0);
         }
     }
 }

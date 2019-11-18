@@ -2,6 +2,7 @@ package com.wwdablu.soumya.lottiebottomnav;
 
 import android.text.TextUtils;
 
+import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -57,7 +58,6 @@ public final class MenuItemBuilder {
 
         builder.menuItem.lottieProgress = menuItem.lottieProgress;
 
-        builder.menuItem.autoPlay = menuItem.autoPlay;
         builder.menuItem.loop = menuItem.loop;
 
         return builder;
@@ -73,17 +73,12 @@ public final class MenuItemBuilder {
         return this;
     }
 
-    public MenuItemBuilder pausedProgress(float progress) {
+    public MenuItemBuilder pausedProgress(@FloatRange(from = 0, to = 1) float progress) {
 
         if (progress <= 0) progress = 0;
-        else if (progress >= 100) progress = 100;
+        else if (progress >= 1) progress = 1;
 
         menuItem.lottieProgress = progress;
-        return this;
-    }
-
-    public MenuItemBuilder autoPlay(boolean autoPlay) {
-        menuItem.autoPlay = autoPlay;
         return this;
     }
 

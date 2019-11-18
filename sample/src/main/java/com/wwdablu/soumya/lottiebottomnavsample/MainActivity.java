@@ -44,33 +44,33 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
             }
         });
 
-        FontItem fontItem = FontBuilder.create("Dashboard1")
+        FontItem fontItem = FontBuilder.create("Dashboard")
                 .selectedTextColor(Color.BLACK)
                 .unSelectedTextColor(Color.GRAY)
-                .selectedTextSize(12) //SP
-                .unSelectedTextSize(8) //SP
-                .setTypeface(Typeface.createFromAsset(getAssets(), "scriptin.ttf"))
+                .selectedTextSize(16) //SP
+                .unSelectedTextSize(12) //SP
+                .setTypeface(Typeface.createFromAsset(getAssets(), "coffeesugar.ttf"))
                 .build();
 
         MenuItem item1 = MenuItemBuilder.create("home.json", MenuItem.Source.Assets, fontItem, "dash")
-                .pausedProgress(100)
-                .autoPlay(false)
+                .pausedProgress(1f)
                 .loop(false)
                 .build();
 
-        fontItem = FontBuilder.create(fontItem).setTitle("Gifts1").build();
+        fontItem = FontBuilder.create(fontItem).setTitle("Gifts").build();
         MenuItem item2 = MenuItemBuilder.createFrom(item1, fontItem)
                 .selectedLottieName("gift.json")
                 .unSelectedLottieName("gift.json")
+                .loop(true)
                 .build();
 
-        fontItem = FontBuilder.create(fontItem).setTitle("Mail1").build();
+        fontItem = FontBuilder.create(fontItem).setTitle("Mail").build();
         MenuItem item3 = MenuItemBuilder.createFrom(item1, fontItem)
                 .selectedLottieName("message.json")
                 .unSelectedLottieName("message.json")
                 .build();
 
-        fontItem = FontBuilder.create(fontItem).setTitle("Settings1").setTypeface(null).build();
+        fontItem = FontBuilder.create(fontItem).setTitle("Settings").build();
         MenuItem item4 = MenuItemBuilder.createFrom(item1, fontItem)
                 .selectedLottieName("settings.json")
                 .unSelectedLottieName("settings.json")
