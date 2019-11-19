@@ -52,7 +52,7 @@ MenuItem settings = MenuItemBuilder.createFrom(homeItem)
 In the above approach properties like `autoPlay` and `loop` are of the same value from which it is created.  
 
 ## Creating Text Menu Items  
-These are used to display the text on the menu item.  
+These are used to display the text on the menu item. Now, we can also specify custom fonts too.  
 ```
 FontItem fontItem = FontBuilder.create("Dashboard")
     .selectedTextColor(Color.BLACK)
@@ -88,9 +88,9 @@ void onAnimationCancel(int index, MenuItem menuItem);
 It should be noted that if `autoPlay` is enabled, then it must be noted that `onMenuSelected` will call `onAnimationStart` immediately. So it is better to perform quick tasks in these callback and move heavy tasks in separate threads.  
   
 ## Demo  
-The demo video is present inside the demo folder. The GIF version is shown below.  
+The demo video is present inside the demo folder.  
   
-![Demo](https://github.com/wwdablu/LottieBottomNav/blob/master/demo/demo_1.0.0.gif)  
+![Demo](https://github.com/wwdablu/LottieBottomNav/blob/master/demo/version_1.1.0.mov)  
 
 **Lottie Files**  
 The lottie files used have been taken from `https://www.lottiefiles.com/`. The lotties files have been developed by the respective developers and I have not created them.  
