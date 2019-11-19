@@ -90,7 +90,7 @@ It should be noted that if `autoPlay` is enabled, then it must be noted that `on
 ## Demo  
 The demo video is present inside the demo folder.  
   
-![Demo](https://github.com/wwdablu/LottieBottomNav/blob/master/demo/version_1.1.0.mov)  
+![Demo](https://github.com/wwdablu/LottieBottomNav/blob/master/demo/version_1.1.0.gif)  
 
 **Lottie Files**  
 The lottie files used have been taken from `https://www.lottiefiles.com/`. The lotties files have been developed by the respective developers and I have not created them.  
