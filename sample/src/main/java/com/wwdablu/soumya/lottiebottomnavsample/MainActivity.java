@@ -2,6 +2,7 @@ package com.wwdablu.soumya.lottiebottomnavsample;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.TypefaceCompat;
+import androidx.fragment.app.Fragment;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -20,11 +21,12 @@ import com.wwdablu.soumya.lottiebottomnav.MenuItemBuilder;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ILottieBottomNavCallback {
+public class MainActivity extends AppCompatActivity implements ILottieBottomNavCallback, MailFragment.ClickHandler {
 
-    LottieBottomNav bottomNav;
-    Button animateMessage;
-    ArrayList<MenuItem> list;
+    private LottieBottomNav bottomNav;
+    private ArrayList<MenuItem> list;
+
+    private ArrayList<Fragment> mFragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +34,17 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
         setContentView(R.layout.activity_main);
 
         bottomNav = findViewById(R.id.bottom_nav);
-        animateMessage = findViewById(R.id.btn_animate_message);
 
-        animateMessage.setOnClickListener(view -> {
+        mFragments = new ArrayList<>(4);
 
-            if(bottomNav.getSelectedIndex() == 2) {
+        mFragments.add(new HomeFragment());
+        mFragments.add(new GiftFragment());
 
-                MenuItem cupidMessage = MenuItemBuilder.createFrom(bottomNav.getMenuItemFor(2))
-                        .selectedLottieName("message_cupid.json")
-                        .tag("cupid")
-                        .build();
+        MailFragment mailFragment = new MailFragment();
+        mailFragment.setClickHandler(this);
+        mFragments.add(mailFragment);
 
-                bottomNav.updateMenuItemFor(2, cupidMessage);
-            }
-        });
+        mFragments.add(new SettingsFragment());
 
         FontItem fontItem = FontBuilder.create("Dashboard")
                 .selectedTextColor(Color.BLACK)
@@ -95,7 +94,10 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
 
     @Override
     public void onMenuSelected(int oldIndex, int newIndex, MenuItem menuItem) {
-        animateMessage.setEnabled(newIndex == 2);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fl_frag_container, mFragments.get(newIndex), mFragments.get(newIndex).getClass().getSimpleName())
+                .commitAllowingStateLoss();
     }
 
     @Override
@@ -124,5 +126,19 @@ public class MainActivity extends AppCompatActivity implements ILottieBottomNavC
                 .build();
 
         bottomNav.updateMenuItemFor(2, item);
+    }
+
+    @Override
+    public void onChangeMenuIcon() {
+
+        if(bottomNav.getSelectedIndex() == 2) {
+
+            MenuItem cupidMessage = MenuItemBuilder.createFrom(bottomNav.getMenuItemFor(2))
+                    .selectedLottieName("message_cupid.json")
+                    .tag("cupid")
+                    .build();
+
+            bottomNav.updateMenuItemFor(2, cupidMessage);
+        }
     }
 }

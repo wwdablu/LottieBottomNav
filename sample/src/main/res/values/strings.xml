@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">LottieBottomNavSample</string>
     <string name="animate_message_icon">Animate Message Icon</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="gift_fragment">Gift Fragment</string>
+    <string name="mail_fragment">Mail Fragment</string>
+    <string name="settings_fragment">Settings Fragment</string>
+    <string name="animate">Animate</string>
 </resources>
